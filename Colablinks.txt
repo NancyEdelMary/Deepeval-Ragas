@@ -65,6 +65,7 @@ D:\GenAIAssurance\Enablement Sessions\Session3\DeepEvalCode
 Enter the following:
 .venv\scripts\activate
 Press enter
-python chatbot\test_chatbot.py
+python chatbot\ragas_chatbot.py
 Press enter
+
 
