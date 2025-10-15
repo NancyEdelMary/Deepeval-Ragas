@@ -1,6 +1,23 @@
 Deepeval
-
 https://colab.research.google.com/drive/1zFv1jDDLAlZFeXxP23QyKwAd_kdks--3?usp=sharing
+
+
+
+RAGAS:
+https://colab.research.google.com/drive/1pSG4KgEACLpLXCAs-Tj_ohmCVuK50XwR?usp=sharing
+
+********test_chatbot.py****************
+https://drive.google.com/drive/folders/1S5h0d6rz4sWCdbVpQn82AHEdVGUCt07t?usp=sharing -> Download this
+Follow the steps below to execute it :
+-> Navigate to
+D:\GenAIAssurance\Enablement Sessions\Session3\DeepEvalCode
+-> Open CMD
+ 
+Enter the following:
+.venv\scripts\activate
+Press enter
+python chatbot\test_chatbot.py
+Press enter
 
 *********Ragas PPT Code************************
 from ragas import evaluate
@@ -39,3 +56,15 @@ metrics = [Faithfulness(llm=wrapped_llm), ContextPrecision(llm=wrapped_llm), Con
 result = evaluate(dataset = dataset, metrics=metrics)
 df = result.to_pandas()
 print(df.to_string())
+
+Follow the steps below to execute it :
+-> Navigate to
+D:\GenAIAssurance\Enablement Sessions\Session3\DeepEvalCode
+-> Open CMD
+ 
+Enter the following:
+.venv\scripts\activate
+Press enter
+python chatbot\test_chatbot.py
+Press enter
+
