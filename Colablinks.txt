@@ -1,2 +1,41 @@
 Deepeval
+
 https://colab.research.google.com/drive/1zFv1jDDLAlZFeXxP23QyKwAd_kdks--3?usp=sharing
+
+*********Ragas PPT Code************************
+from ragas import evaluate
+from datasets import Dataset
+import os
+from langchain_community.chat_models import AzureChatOpenAI
+from ragas.embeddings import HuggingFaceEmbeddings
+from ragas.llms.base import LangchainLLMWrapper
+ 
+os.environ['AZURE_API_KEY'] = "<api_key>"
+os.environ['AZURE_API_BASE'] = "<api_base>"
+os.environ['AZURE_API_VERSION'] = "<api_version>"
+os.environ['AZURE_DEPLOYMENT'] ="<deployment_name>"
+ 
+llm_client = AzureChatOpenAI(
+        openai_api_key=os.environ['AZURE_API_KEY'],
+        openai_api_base=os.environ['AZURE_API_BASE'],
+        openai_api_version=os.environ['AZURE_API_VERSION'],
+        deployment_name=os.environ['AZURE_DEPLOYMENT'],
+        model='gpt-4o'
+    )
+evaluator_embeddings = HuggingFaceEmbeddings(model="sentence-transformers/all-MiniLM-L6-v2")
+wrapped_llm = LangchainLLMWrapper(llm_client)
+ 
+from ragas.metrics import Faithfulness, ContextPrecision, ContextRecall, AnswerCorrectness
+data = {
+"question": ["Who founded Microsoft"],
+"contexts": [["Microsoft was founded by Bill Gates & Paul in 1975."]],
+"answer": ["Microsoft was founded by Bill Gates"],
+"ground_truth":["Microsoft was founded by Bill Gates & Paul"]
+}
+dataset = Dataset.from_dict(data)
+ 
+metrics = [Faithfulness(llm=wrapped_llm), ContextPrecision(llm=wrapped_llm), ContextRecall(llm=wrapped_llm), AnswerCorrectness(llm=wrapped_llm, embeddings=evaluator_embeddings)]
+ 
+result = evaluate(dataset = dataset, metrics=metrics)
+df = result.to_pandas()
+print(df.to_string())
